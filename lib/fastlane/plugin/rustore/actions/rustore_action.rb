@@ -61,6 +61,7 @@ module Fastlane
           FastlaneCore::ConfigItem.new(key: :publish_type,
                                        env_name: "RUSTORE_PUBLISH_TYPE",
                                        description: "Тип публикации (MANUAL, DELAYED, INSTANTLY). По умолчанию - INSTANTLY",
+                                       default_value: 'INSTANTLY',
                                        optional: true),
           FastlaneCore::ConfigItem.new(key: :aab,
                                       env_name: "RUSTORE_AAB",
