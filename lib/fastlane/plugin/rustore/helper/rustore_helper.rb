@@ -7,6 +7,8 @@ module Fastlane
 
   module Helper
     class RustoreHelper
+      REQUEST_TIMEOUT = 60
+
       def self.connection
         require 'faraday'
         require 'faraday_middleware'
@@ -21,7 +23,7 @@ module Fastlane
         else
           logger.level = Logger::ERROR
         end
-        Faraday.new(options) do |builder|
+        connection = Faraday.new(options) do |builder|
           builder.request(:multipart)
           builder.request(:json)
           builder.request(:url_encoded)
@@ -30,6 +32,9 @@ module Fastlane
           builder.use(FaradayMiddleware::FollowRedirects)
           builder.adapter(:net_http)
         end
+
+        connection.options.timeout = REQUEST_TIMEOUT
+        connection
       end
 
       def self.rsa_sign(timestamp, key_id, private_key)

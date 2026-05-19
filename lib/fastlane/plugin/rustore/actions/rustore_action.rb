@@ -21,6 +21,8 @@ module Fastlane
         aab = params[:aab]
         gms_apk = params[:gms_apk]
 
+        Helper::RustoreHelper.REQUEST_TIMEOUT = params[:request_timeout]
+
         # Получение токена
         token = Helper::RustoreHelper.get_token(key_id: key_id, private_key: private_key)
         # Создание черновика
@@ -37,7 +39,7 @@ module Fastlane
         if gms_apk && aab.nil?
           Helper::RustoreHelper.upload_app(token, draft_id, false, gms_apk, package_name, false)
         end
-        sleep(30)
+        sleep(params[:wait_timeout])
         # Отправка на модерацию
         Helper::RustoreHelper.commit_version(token, draft_id, package_name)
       end
@@ -71,6 +73,18 @@ module Fastlane
           FastlaneCore::ConfigItem.new(key: :changelog_path,
                                        env_name: "RUSTORE_CHANGELOG_PATH",
                                        description: "путь до файла .txt с описанием Что нового?",
+                                       optional: true),
+          FastlaneCore::ConfigItem.new(key: :request_timeout,
+                                       env_name: "RUSTORE_REQUEST_TIMEOUT",
+                                       description: "Таймаут запроса в RuStore",
+                                       default_value: 300,
+                                       type: Int,
+                                       optional: true),
+          FastlaneCore::ConfigItem.new(key: :wait_timeout,
+                                       env_name: "RUSTORE_WAIT_TIMEOUT",
+                                       description: "Время ожидания после загрузки сборки",
+                                       default_value: 30,
+                                       type: Int,
                                        optional: true)
         ]
       end
