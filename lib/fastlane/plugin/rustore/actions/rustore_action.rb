@@ -21,7 +21,7 @@ module Fastlane
         aab = params[:aab]
         gms_apk = params[:gms_apk]
 
-        Helper::RustoreHelper.REQUEST_TIMEOUT = params[:request_timeout]
+        Helper::RustoreHelper::REQUEST_TIMEOUT = params[:request_timeout]
 
         # Получение токена
         token = Helper::RustoreHelper.get_token(key_id: key_id, private_key: private_key)
