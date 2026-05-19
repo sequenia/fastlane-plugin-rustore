@@ -7,7 +7,6 @@ module Fastlane
 
   module Helper
     class RustoreHelper
-      REQUEST_TIMEOUT = 60
 
       def self.connection
         require 'faraday'
@@ -33,7 +32,7 @@ module Fastlane
           builder.adapter(:net_http)
         end
 
-        connection.options.timeout = REQUEST_TIMEOUT
+        connection.options.timeout = ENV['RUSTORE_FARADAY_REQUEST_TIMEOUT'].to_i
         connection
       end
 
