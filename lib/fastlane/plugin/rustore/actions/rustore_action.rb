@@ -78,13 +78,13 @@ module Fastlane
                                        env_name: "RUSTORE_REQUEST_TIMEOUT",
                                        description: "Таймаут запроса в RuStore",
                                        default_value: 300,
-                                       type: Int,
+                                       type: Integer,
                                        optional: true),
           FastlaneCore::ConfigItem.new(key: :wait_timeout,
                                        env_name: "RUSTORE_WAIT_TIMEOUT",
                                        description: "Время ожидания после загрузки сборки",
                                        default_value: 30,
-                                       type: Int,
+                                       type: Integer,
                                        optional: true)
         ]
       end
