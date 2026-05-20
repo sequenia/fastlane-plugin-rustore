@@ -48,6 +48,10 @@ module Fastlane
         url = "/public/auth/"
         response = connection.post(url) do |req|
           req.body = { keyId: key_id, timestamp: timestamp, signature: signature }
+
+          UI.message("Debug: request url #{url}") if ENV['DEBUG']
+          UI.message("Debug: request headers #{req.headers}") if ENV['DEBUG']
+          UI.message("Debug: request body #{req.body}") if ENV['DEBUG']
         end
 
         UI.message("Debug: response #{response.body}") if ENV['DEBUG']
@@ -73,6 +77,10 @@ module Fastlane
           req.body = {}
           req.body['publishType'] = publish_type unless publish_type.nil?
           req.body['whatsNew'] = changelog unless changelog_path.nil?
+
+          UI.message("Debug: request url #{url}") if ENV['DEBUG']
+          UI.message("Debug: request headers #{req.headers}") if ENV['DEBUG']
+          UI.message("Debug: request body #{req.body}") if ENV['DEBUG']
         end
 
         UI.message("Debug: response #{response.body}") if ENV['DEBUG']
@@ -106,6 +114,10 @@ module Fastlane
           req.params['servicesType'] = apk_type unless apk_type.nil?
           req.params['isMainApk'] = is_main unless is_main.nil?
           req.body = payload
+
+          UI.message("Debug: request url #{url}") if ENV['DEBUG']
+          UI.message("Debug: request headers #{req.headers}") if ENV['DEBUG']
+          UI.message("Debug: request body #{req.body}") if ENV['DEBUG']
         end
         error_message = response.body['message'].to_s
 
@@ -119,8 +131,13 @@ module Fastlane
 
       def self.commit_version(token, draft_id, package_name)
         url = "/public/v1/application/#{package_name}/version/#{draft_id}/commit"
+
         response = connection.post(url) do |req|
           req.headers['Public-Token'] = token
+
+          UI.message("Debug: request url #{url}") if ENV['DEBUG']
+          UI.message("Debug: request headers #{req.headers}") if ENV['DEBUG']
+          UI.message("Debug: request body #{req.body}") if ENV['DEBUG']
         end
 
         UI.message("Debug: response #{response.body}") if ENV['DEBUG']
